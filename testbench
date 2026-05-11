@@ -1,21 +1,45 @@
+ D Flip-Flop (1-bit):
+module D_ff_tb();
+reg clk;
+reg reset;
+reg in_d;
+wire out_q;
+wire out_qbar;
+D_ff d1(.clk(clk),.reset(reset),.in_d(in_d),.out_q(out_q),.out_qbar(out_qbar));
+initial
+begin
+clk=1'b0;
+forever
+#5 clk=~clk;
+end
+initial
+begin
+$display("Time|clk|reset|in_d|out_q|out_qbar");
+$monitor("%4d|%3b|%5b|%3b|%6b|%7b",$time,clk,reset,in_d,out_q,out_qbar);
+reset=1'b1;in_d=1'b1;
+#10;reset=1'b0;in_d=1'b0;
+#10;in_d=1'b1;
+#40;in_d=1'b0;
+#40;in_d=1'b1;
+#50 $finish;
+end
+endmodule
 
+
+
+
+Shift Register (8-bit):
 module shift_reg_tb();
-
 reg clk, reset, din;
 wire [7:0] q;
-
 shift_reg uut(clk, reset, din, q);
-
 // clock generation
 always #5 clk = ~clk;
-
 initial begin
     clk = 0;
     reset = 1;
     din = 0;
-
     #10 reset = 0;   // release reset properly
-
     #10 din = 1;
     #10 din = 0;
     #10 din = 1;
@@ -24,15 +48,79 @@ initial begin
       #10 din = 1;
       #10 din = 0; 
       #10 din = 1;
-          
-
-
-    #40 $finish;
+      #40 $finish;
 end
 initial begin
-$monitor("Time=%0t | reset=%b din=%b q=%b", 
-                  $time, reset, din, q);
+$monitor("Time=%0t | reset=%b din=%b q=%b", $time, reset, din, q);
     end
-
 endmodule
 
+
+
+
+ADDER 8 - BIT
+module adder8_bit_tb();
+reg  [7:0] A;
+reg  [7:0] B;
+reg        Cin;
+wire [7:0] Sum;
+wire       Cout;
+adder8_bit uut (
+    .A(A),
+    .B(B),
+    .Cin(Cin),
+    .Sum(Sum),
+    .Cout(Cout)
+);
+initial
+ begin
+    $monitor("Time=%0t | A=%d B=%d Cin=%b | Sum=%d Cout=%b",$time, A, B, Cin, Sum, Cout);
+    A = 0;   B = 0;   Cin = 0; #10;
+    A = 10;  B = 20;  Cin = 0; #10;
+    A = 50;  B = 25;  Cin = 1; #10;
+    A = 100; B = 155; Cin = 0; #10;
+    A = 255; B = 1;   Cin = 0; #10;
+    A = 200; B = 100; Cin = 1; #10;
+
+    $finish;
+end
+endmodule
+
+
+
+
+OUTPUT REGISTER:
+module output_reg_tb();
+reg clk;
+reg reset;
+reg [7:0] data_in;
+wire [7:0] data_out;
+
+output_reg uut (
+    .clk(clk),
+    .reset(reset),
+    .data_in(data_in),
+    .data_out(data_out));
+
+always #5 clk = ~clk;
+
+initial 
+begin
+    $monitor("Time=%0t | reset=%b data_in=%d | data_out=%d",
+              $time, reset, data_in, data_out);
+
+    clk = 0;
+    reset = 1;
+    data_in = 0;
+    #10;
+    reset = 0;
+    data_in = 8'd10; #10;
+    data_in = 8'd25; #10;
+    data_in = 8'd50; #10;
+    reset = 1; #10;
+    reset = 0;
+    data_in = 8'd100; #10;
+    data_in = 8'd200; #10;
+    $finish;
+end
+endmodule
