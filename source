@@ -1,4 +1,4 @@
-D Flip-Flop (1-bit):
+1.D Flip-Flop (1-bit):
 module D_ff(out_q,out_qbar,clk,reset,in_d);
 input clk,reset,in_d;
 output out_q,out_qbar;
@@ -13,3 +13,19 @@ end
 assign out_qbar=~out_q;
 endmodule
 
+
+
+2.Shift Register (8-bit):
+module shift_reg(
+    input clk,
+    input reset,
+    input din,
+    output reg [7:0] q
+);
+always @(posedge clk or posedge reset) begin
+    if (reset)
+        q <= 8'b00000000;
+    else
+        q <= {q[6:0], din};
+end
+endmodule
