@@ -1,1 +1,38 @@
 
+module shift_reg_tb();
+
+reg clk, reset, din;
+wire [7:0] q;
+
+shift_reg uut(clk, reset, din, q);
+
+// clock generation
+always #5 clk = ~clk;
+
+initial begin
+    clk = 0;
+    reset = 1;
+    din = 0;
+
+    #10 reset = 0;   // release reset properly
+
+    #10 din = 1;
+    #10 din = 0;
+    #10 din = 1;
+    #10 din = 1;
+     #10 din = 0;
+      #10 din = 1;
+      #10 din = 0; 
+      #10 din = 1;
+          
+
+
+    #40 $finish;
+end
+initial begin
+$monitor("Time=%0t | reset=%b din=%b q=%b", 
+                  $time, reset, din, q);
+    end
+
+endmodule
+
