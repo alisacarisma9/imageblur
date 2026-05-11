@@ -1,4 +1,4 @@
- D Flip-Flop (1-bit):
+1.D Flip-Flop (1-bit):
 module D_ff_tb();
 reg clk;
 reg reset;
@@ -28,7 +28,7 @@ endmodule
 
 
 
-Shift Register (8-bit):
+2.Shift Register (8-bit):
 module shift_reg_tb();
 reg clk, reset, din;
 wire [7:0] q;
@@ -58,7 +58,7 @@ endmodule
 
 
 
-ADDER 8 - BIT
+3.ADDER 8 - BIT
 module adder8_bit_tb();
 reg  [7:0] A;
 reg  [7:0] B;
@@ -89,7 +89,7 @@ endmodule
 
 
 
-OUTPUT REGISTER:
+4.OUTPUT REGISTER:
 module output_reg_tb();
 reg clk;
 reg reset;
@@ -103,12 +103,9 @@ output_reg uut (
     .data_out(data_out));
 
 always #5 clk = ~clk;
-
 initial 
 begin
-    $monitor("Time=%0t | reset=%b data_in=%d | data_out=%d",
-              $time, reset, data_in, data_out);
-
+    $monitor("Time=%0t | reset=%b data_in=%d | data_out=%d",$time, reset, data_in, data_out);
     clk = 0;
     reset = 1;
     data_in = 0;
