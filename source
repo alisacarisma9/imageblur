@@ -1,0 +1,15 @@
+D Flip-Flop (1-bit):
+module D_ff(out_q,out_qbar,clk,reset,in_d);
+input clk,reset,in_d;
+output out_q,out_qbar;
+reg out_q;
+always @(posedge clk or posedge reset) 
+begin
+if(reset)
+ out_q<=1'b0;
+else
+   out_q<=in_d;
+end
+assign out_qbar=~out_q;
+endmodule
+
