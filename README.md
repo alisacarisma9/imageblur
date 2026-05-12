@@ -97,23 +97,4 @@ Verification Methods:
 - RTL Schematic Analysis
 - Waveform Verification
 
- Project Structure
-
-Image_Blur_Filter/
-│
-├── Verilog_Modules/
-│   ├── d_ff.v
-│   ├── shift_reg.v
-│   ├── full_adder.v
-│   ├── adder8_bit.v
-│   └── output_reg.v
-│
-├── Testbenches/
-│   ├── d_ff_tb.v
-│   ├── shift_reg_tb.v
-│   ├── adder8_bit_tb.v
-│   └── output_reg_tb.v
-│
-├── RTL_Diagrams/
-├── Simulation_Waveforms/
-└── README.md
+ 
